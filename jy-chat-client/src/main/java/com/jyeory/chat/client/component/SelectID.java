@@ -1,17 +1,23 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
+
+import lombok.Getter;
+import lombok.Setter;
 /*
  * 	쪽지 보내기, 대화하기, 파일 보내기 등에서 선택을 눌렀을때
  *  이 클래스가 호출된다.
  */
+@Getter
+@Setter
 public class SelectID extends Frame implements ActionListener{
-	static List idlist;
+	private List idlist;
 	private JButton confirm;
 	private JButton exit;
+	
 	public SelectID(){
 		JLabel name = new JLabel("전체 접속자");
 		idlist = new List();
@@ -36,20 +42,21 @@ public class SelectID extends Frame implements ActionListener{
 		if(e.getSource() == confirm){
 			System.out.println(id);
 			if(id == null){
-				JOptionPane.showMessageDialog(null,"아이디를 선택하세요.");
-			}else{
+				JOptionPane.showMessageDialog(null, "아이디를 선택하세요.");
+			}
+			else{
 				/*
-				 *  셋 중에 하나에서 요청한다.
-				 *  즉.. 하나는 걸린다 -_-
+				 *  셋 중 하나에서 요청한다.
+				 *  즉.. 하나는 걸린다
 				 */
 				try{
-					SendMemo.inputid.setText(id);
+					SendMemo.inputId.setText(id);
 				}catch(NullPointerException e1){}
 				try{
-					SelectChatUser.inputid.setText(id);
+					SelectChatUser.inputId.setText(id);
 				}catch(NullPointerException e2){}
 				try{
-					TransferFile.target.setText(id);
+					TransferFile.targetTxtFld.setText(id);
 				}catch(NullPointerException e3){}
 				dispose();
 			}

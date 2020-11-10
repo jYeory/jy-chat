@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class RoomManager {
 	//전체 접속자!!
-	public static Vector<ClientConnection> allUserList = new Vector<ClientConnection>();
+	public Vector<ClientConnection> allUserList = new Vector<ClientConnection>();
 	
 	/*
 	 *  접속자!! 이부분은 쪽지나 1:1 대화를 위해 필요로 한다.
@@ -29,7 +29,7 @@ public class RoomManager {
 	/*-----------------------------------------------------
 	 * 			방을 만들고 Map에 집어 넣기.
 	 *-----------------------------------------------------*/
-	public static void makeRoom(String roomName){
+	public void makeRoom(String roomName){
 		Room newRoom = new Room(roomName);
 		roomMap.put(roomName, newRoom);
 	}
@@ -93,7 +93,7 @@ public class RoomManager {
 	 * 	user에는 1:1대화만 하는 두명이 있기에 그 두명에게만
 	 *  정보를 전송하면 된다.
 	 *-----------------------------------------------------*/
-	public static void mantomanChat(String receiveuser, String senduser, String msg){
+	public static void oneOnOneChat(String receiveuser, String senduser, String msg){
 		for(int i=0; i<user.size(); i++){
 			user.get(i).sendMsg(MsgInfo.MANTOMAN+"/"+receiveuser+"/"+senduser+"/"+msg);
 //			System.out.println(user.get(i)+"에게 정보를 보냈다.");	//확인용

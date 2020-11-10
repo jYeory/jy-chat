@@ -1,11 +1,24 @@
-package com.jyeory.chat.common;
+package com.jyeory.chat.common.server;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.net.ServerSocket;
+import java.net.Socket;
 
-import javax.swing.JOptionPane;
+import com.jyeory.chat.common.component.SendFile;
 
-public class FileSendServer implements Runnable, Serializable{
+public class FileExchangeServer implements Runnable, Serializable{
+	
 	final String SERVER = "[FILESERVER] ";
 	private String username;
 	private int portnum = 0;
@@ -17,7 +30,8 @@ public class FileSendServer implements Runnable, Serializable{
 	InputStream inst = null;		//인풋 스트림.
 	String filepath;				//파일 경로
 	Socket socket;
-	FileSendServer(int portnum, String path){
+	
+	public FileExchangeServer(int portnum, String path){
 		this.portnum = portnum;
 		this.filepath = path;
 	}

@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -16,33 +16,53 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import com.jyeory.chat.client.MultiClient;
 import com.jyeory.chat.common.MsgInfo;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /*
  * 	메뉴바에서 대화하기를 눌렀을때 호출되는 클래스.
  *  상대가 없기 때문에 꼭 선택을 눌러서 대화상대를 지정해야 한다.
  */
-class SelectChatUser extends Frame implements ActionListener{
-	static JTextField inputid;
+@Getter
+@Setter
+public class SelectChatUser extends Frame implements ActionListener{	
+	public static JTextField inputId;
+	
 	JLabel targetuser;
 	JButton selectid;
 	JButton ok;
 	JButton exit;
 	String receiveid;
-	String id;
-	public SelectChatUser(String id){
+	private String id;
+	private WaitRoom wRoom;
+	
+	public SelectChatUser(String id, WaitRoom wRoom){
 		this.id = id;
+		this.wRoom = wRoom;
+		init();
+	}
+	
+	public SelectChatUser(String id) {
+		this.id = id;
+		init();
+	}
+	
+	private void init() {
 		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		targetuser = new JLabel("대화 상대 ");
-		inputid = new JTextField(13);
-		inputid.setText("대상을 선택하세요.");
+		inputId = new JTextField(13);
+		inputId.setText("대상을 선택하세요.");
+		
 		selectid = new JButton("선택");
 		ok = new JButton("확인");
 		exit = new JButton("닫기");
 		
 		JPanel center = new JPanel();
 		center.setLayout(new FlowLayout());
-		center.add(targetuser); 	center.add(inputid);	center.add(selectid);
+		center.add(targetuser); 	center.add(inputId);	center.add(selectid);
 		center.setBorder(loweredetched);
 		
 		JPanel south = new JPanel();
@@ -63,11 +83,11 @@ class SelectChatUser extends Frame implements ActionListener{
 				dispose();
 			}
 		});
-		
 	}
+	
 	public void actionPerformed(ActionEvent e) {
-		receiveid = inputid.getText();
-		String id = WaitRoom.id;
+		receiveid = inputId.getText();
+		
 		System.out.println(receiveid+" "+id);
 		if(e.getSource() == ok){
 			try {

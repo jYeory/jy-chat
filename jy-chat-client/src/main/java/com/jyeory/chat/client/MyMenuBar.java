@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
  * 	메뉴바를 추가하는 부분.
  *  메뉴바는 배열로 했기 때문에 for문을 이용했다.
  */
-class MyMenuBar extends MenuBar{
-	MyMenuBar(Frame f){
+public class MyMenuBar extends MenuBar{
+	public MyMenuBar(Frame f){
 		f.setMenuBar(this);
 	}
 	public void addMenus(String[] menus){

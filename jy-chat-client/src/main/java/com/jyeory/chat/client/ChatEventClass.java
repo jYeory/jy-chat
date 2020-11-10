@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
 
+import com.jyeory.chat.client.component.ChatRoom;
+import com.jyeory.chat.client.component.SelectChatUser;
+import com.jyeory.chat.client.component.SendMemo;
+import com.jyeory.chat.client.component.TransferFile;
 import com.jyeory.chat.common.MsgInfo;
 /*
  * 파일 메뉴를 이용해서
