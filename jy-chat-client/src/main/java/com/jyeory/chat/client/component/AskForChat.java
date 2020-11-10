@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -13,19 +13,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.jyeory.chat.client.MultiClient;
 import com.jyeory.chat.common.MsgInfo;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AskForChat extends Frame implements ActionListener {
-	JLabel subject;
-	JButton accept;
-	JButton reject;
-	String target;
-	String shooter;
-	AskForChat(String target, String shooter){
+	private JLabel subject;
+	private JButton accept;
+	private JButton reject;
+	private String target;
+	private String shooter;
+	
+	public AskForChat(String target, String shooter){
 		super(shooter+"님의 대화 요청.");
 		this.target = target;
 		this.shooter = shooter;
 	}
+	
 	public void showFrame(){
 		subject = new JLabel(shooter+"님 께서 대화를 요청하셨습니다.");
 		accept = new JButton("승인");

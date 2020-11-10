@@ -1,4 +1,4 @@
-package com.jyeory.chat.common;
+package com.jyeory.chat.common.component;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -20,9 +20,16 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import com.jyeory.chat.common.client.FileReceiveClient;
+import com.jyeory.chat.common.server.FileExchangeServer;
+
 public class SendFile extends Frame implements ActionListener{
-	static JTextField filename;
-	static JTextField filepath;
+	public static JProgressBar statusBar;
+	public static JTextField size;
+	public static JTextField allsize;
+	public static JTextField filename;
+	public static JTextField filepath;
+	
 	JButton exit;
 	String targetuser;
 	String targetfile;
@@ -30,18 +37,18 @@ public class SendFile extends Frame implements ActionListener{
 	File file;
 	FileWriter filereader;
 	FileReceiveClient client;
-	static JProgressBar statusBar;
-	static JTextField size;
-	static JTextField allsize;
+	
 	String path;
 	int port;
-	FileSendServer fileserver;
+	
+	private FileExchangeServer fileserver;
 	public SendFile(String title, int port, String filepath) throws IOException{
 		super(title);
 		this.port = port;
 		this.path = filepath;
 		file = new File(filepath);
 	}
+	
 	public void showFrame() throws IOException{
 		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		JLabel first = new JLabel("보낼 파일");
@@ -93,7 +100,7 @@ public class SendFile extends Frame implements ActionListener{
 		pack();
 		setVisible(true);
 
-		fileserver = new FileSendServer(port, path);
+		fileserver = new FileExchangeServer(port, path);
 		new Thread(fileserver).start();		//Thread를 실행 시키지 않으면 채팅이 불가능하다.
 	}
 
