@@ -9,9 +9,9 @@
 서버 : jy-chat-server  
 
 # build (순서대로)
-공통 : mvn clean package jy-chat-common -am  
-서버 : mvn clean package jy-chat-server -am  
-클라 : mvn clean package jy-chat-client -am  
+공통 : mvn clean package -pl jy-chat-common -am  
+서버 : mvn clean package -pl jy-chat-server -am  
+클라 : mvn clean package -pl jy-chat-client -am  
 
 # 실행 (순서대로)
 서버 : java -jar {module_dir}/target/jy-chat-server-0.0.1-jar-with-dependencies.jar  
