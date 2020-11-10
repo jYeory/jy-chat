@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -29,15 +29,27 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import com.jyeory.chat.client.ChatEventClass;
+import com.jyeory.chat.client.MultiClient;
+import com.jyeory.chat.client.MyMenuBar;
+import com.jyeory.chat.client.SendMessage;
 import com.jyeory.chat.common.MsgInfo;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ChatRoom extends JFrame implements KeyListener, ActionListener{
-	static JTextArea showText = new JTextArea(10, 20);
+	public static JTextArea showText = new JTextArea(10, 20);
+	public static JLabel inputid;
+	public static String title;
+	
+	private int chiefCode = 0;
+	private List idlist = new List();
 	JTextField inputText = new JTextField();
-	List IDlist = new List();
 	JButton exit = new JButton("나가기");
-	static JLabel inputid;
-	static String title;
+	
 	String id;
 	JPopupMenu chatpopup;  
 	JMenuItem sendmemo, mantoman, transferFile, kick, change;
@@ -45,13 +57,15 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 	JScrollBar chatJsb;
 	JScrollPane userJsp;
 	JScrollBar userJsb;
-	int chiefcode = 0;
+	
+	
 	MyMenuBar mb = new MyMenuBar(this);
 	
-	ChatRoom(String title){
+	public ChatRoom(String title){
 		super("당신이 키보드를 두들기고 있는 방은 : "+ title);
 		this.title = title;
 	}
+	
 	public void showFrame(String name){
 		ActionListener ac = new ChatEventClass(title, this.getFrames());
 
@@ -87,7 +101,7 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 			left.setBorder(loweredetched);
 			
 		//스크롤바 추가
-		userJsp = new JScrollPane(IDlist);
+		userJsp = new JScrollPane(idlist);
 		userJsp.setWheelScrollingEnabled(true);
 		userJsb = userJsp.getVerticalScrollBar();
 			
@@ -96,12 +110,12 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 			right.add(userJsp);
 			right.setBorder(loweredetched);
 		
-		IDlist.addMouseListener(
+		idlist.addMouseListener(
 				new MouseAdapter(){
 			public void mouseClicked(MouseEvent e){
 				if(e.getButton() == 3){
 //					System.out.println("방장 코드 : " + chiefcode);		
-					if( chiefcode == 1 ){		//방장이면 전부다 출력.
+					if( chiefCode == 1 ){		//방장이면 전부다 출력.
 						chatpopup.add(sendmemo);
 						chatpopup.add(mantoman);
 						chatpopup.add(transferFile);
@@ -153,7 +167,7 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 		}
 	}
 	public void actionPerformed(ActionEvent e) {
-		String receiveid = IDlist.getSelectedItem();
+		String receiveid = idlist.getSelectedItem();
 		if(e.getActionCommand().equals("나가기")){
 			this.setVisible(false);
 //			System.out.println("ChatRoom Frame 종료");		//확인

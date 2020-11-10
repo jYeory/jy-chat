@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -20,13 +20,20 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 
+import com.jyeory.chat.client.MultiClient;
 import com.jyeory.chat.common.MsgInfo;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class OneOnOneChatSend extends Frame implements KeyListener, ActionListener{
+	private JTextArea showTextArea;
+	
 	JTextField inputid;
 	JTextField inputtext;
 	JLabel receivedid;
-	JTextArea showtext;
 	JButton selectid;
 	JButton send;
 	JButton exit;
@@ -35,16 +42,18 @@ public class OneOnOneChatSend extends Frame implements KeyListener, ActionListen
 	String receiveduser;
 	JScrollPane mantomanJsp;
 	JScrollBar mantomanJsb;
+	
 	public OneOnOneChatSend(String receiveduser, String senduser){
 		super(receiveduser+" 과(와)의 대화 창");
 		this.senduser = senduser;				//보내는 사람
 		this.receiveduser = receiveduser;		//받는 사람
 	}
+	
 	public void showFrame(){
 		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		receivedid = new JLabel("대화 상대 ");
 		inputid = new JTextField(13);
-		showtext = new JTextArea(10, 20);
+		showTextArea = new JTextArea(10, 20);
 		inputtext = new JTextField(20);
 		inputtext.addKeyListener(this);
 		selectid = new JButton("선택");
@@ -63,7 +72,7 @@ public class OneOnOneChatSend extends Frame implements KeyListener, ActionListen
 		north.setBorder(loweredetched);
 		
 		//스크롤바 추가
-		mantomanJsp = new JScrollPane(showtext);
+		mantomanJsp = new JScrollPane(showTextArea);
 		mantomanJsp.setWheelScrollingEnabled(true);				//휠로도 스크롤 움직이게.
 		mantomanJsb = mantomanJsp.getVerticalScrollBar(); 
 		
@@ -71,7 +80,7 @@ public class OneOnOneChatSend extends Frame implements KeyListener, ActionListen
 		center.setLayout(new BorderLayout());
 		center.add(mantomanJsp,"Center");
 		center.add(inputtext, "South");
-		showtext.setLineWrap(true);
+		showTextArea.setLineWrap(true);
 		
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout());

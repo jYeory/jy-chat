@@ -1,4 +1,4 @@
-package com.jyeory.chat.common;
+package com.jyeory.chat.common.client;
 
 import java.awt.Frame;
 import java.awt.TextArea;
@@ -14,6 +14,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+
+import com.jyeory.chat.common.component.SaveFile;
 
 import lombok.Getter;
 import lombok.Setter;

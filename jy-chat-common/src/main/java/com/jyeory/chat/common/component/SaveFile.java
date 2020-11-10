@@ -1,16 +1,37 @@
-package com.jyeory.chat.common;
+package com.jyeory.chat.common.component;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.*;
+import java.awt.Color;
+import java.awt.FileDialog;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import java.net.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+
+import com.jyeory.chat.common.client.FileReceiveClient;
 
 public class SaveFile extends Frame implements ActionListener{
-	static JTextField filename;
-	static JTextField filepath;
+	public static JTextField filename;
+	public static JTextField filepath;
+	public static JProgressBar statusBar;
+	public static JTextField size;
+	public static JTextField allsize;
+	public static String path;
+	
 	JButton savefile;
 	JButton select_dir;
 	JButton exit;
@@ -20,14 +41,12 @@ public class SaveFile extends Frame implements ActionListener{
 	File file;
 	FileWriter filereader;
 	FileReceiveClient client;
-	static JProgressBar statusBar;
-	static JTextField size;
-	static JTextField allsize;
-	static String path;
+	
 	public SaveFile(String title, 	FileReceiveClient client) throws IOException{
 		super(title);
 		this.client = client;
 	}
+	
 	public void showFrame() throws IOException{
 		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		JLabel first = new JLabel("받을 파일");

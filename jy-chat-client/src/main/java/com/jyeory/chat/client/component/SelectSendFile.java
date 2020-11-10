@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import javax.swing.*;
 import java.awt.*;

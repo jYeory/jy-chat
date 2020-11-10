@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.util.GregorianCalendar;
 
+import com.jyeory.chat.client.component.SelectChatUser;
+import com.jyeory.chat.client.component.SendMemo;
+import com.jyeory.chat.client.component.TransferFile;
+import com.jyeory.chat.client.component.WaitRoom;
 import com.jyeory.chat.common.MsgInfo;
 /*
  * 	대기실에서의 메뉴 이벤트 처리 클래스.
@@ -18,15 +22,19 @@ import com.jyeory.chat.common.MsgInfo;
 public class EventClass implements ActionListener {
 	String received;
 	FileDialog fdial;
-	String roomtitle;
-	Frame[] frame;
-	public EventClass(String title, Frame[] frames) {
-		this.roomtitle = title;
-		this.frame = frames;		
+	
+	private String roomTitle;
+	private Frame[] frame;
+	private WaitRoom wRoom;
+	
+	public EventClass(String title, Frame[] frames, WaitRoom wRoom) {
+		this.roomTitle = title;
+		this.frame = frames;
+		this.wRoom = wRoom;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		String id = WaitRoom.inputid.getText();
+		String id = wRoom.getInputId().getText();
 		String selectmenu = e.getActionCommand();
 		/*
 		 *	파일 저장 다이얼로그를 띄워서 현재 대화 내용을 저장한다. 
@@ -39,9 +47,9 @@ public class EventClass implements ActionListener {
 		*/
 			GregorianCalendar gc = new GregorianCalendar();
 			DateFormat df = DateFormat.getInstance();
-			String data = df.format(gc.getTime())+"\r\n["+roomtitle+"]"+"에서의 대화내용"+"\r\n";
+			String data = df.format(gc.getTime())+"\r\n["+roomTitle+"]"+"에서의 대화내용"+"\r\n";
 			// \n의 값을 \r\n으로 해야 메모장에서 엔터 기능이 이루어 진다.
-			data += WaitRoom.showText.getText().replaceAll("\n", "\r\n");
+			data += wRoom.getShowTextArea().getText().replaceAll("\n", "\r\n");
 			BufferedWriter bw;
 			try {
 				try{

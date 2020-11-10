@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
@@ -32,17 +32,29 @@ import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import com.jyeory.chat.client.EventClass;
+import com.jyeory.chat.client.MultiClient;
+import com.jyeory.chat.client.MyMenuBar;
+import com.jyeory.chat.client.SendMessage;
 import com.jyeory.chat.common.MsgInfo;
 import com.jyeory.chat.common.Room;
 import com.jyeory.chat.common.RoomManager;
 
-class WaitRoom extends JFrame implements KeyListener, ActionListener{
-	static JTextArea showText = new JTextArea(10, 20);
-	static JLabel inputid;
-	static String id;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class WaitRoom extends JFrame implements KeyListener, ActionListener{
+	private JTextArea showTextArea = new JTextArea(10, 20);
+	private JLabel inputId;
+	private String id;
+	
 	JTextField inputText = new JTextField();
-	List IDlist = new List(8);
-	List roomList = new List(8);
+	
+	private List roomList = new List(8);
+	private List idlist = new List(8);
+	
 	JButton make = new JButton("방 만들기");
 	JButton enter = new JButton("들어가기");
 	JButton exit = new JButton("나가기");
@@ -58,14 +70,14 @@ class WaitRoom extends JFrame implements KeyListener, ActionListener{
 
 	MyMenuBar mb = new MyMenuBar(this);
 	
-	WaitRoom(String title){
+	public WaitRoom(String title){
 		super(title);
 		roomtitle = title;
 	}
 
 	//대기실 클라이언트
 	public void showFrame(String name){
-		ActionListener ac = new EventClass("대기실", this.getFrames());
+		ActionListener ac = new EventClass("대기실", this.getFrames(), this);
 		/*
 		 * MyMenuBar 클래스의 메소드를 이용해 메뉴 추가.
 		 */
@@ -76,7 +88,7 @@ class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		mb.addActionListener(ac);
 
 		this.id = name;
-		inputid = new JLabel(id);
+		inputId = new JLabel(id);
 		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		inputText.addKeyListener(this);
 
@@ -86,19 +98,19 @@ class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		transferFile=new JMenuItem("파일전송");  	transferFile.addActionListener(this);
 
 		//대기실 채팅창에 스크롤바 추가.
-		waitJsp = new JScrollPane(showText);
+		waitJsp = new JScrollPane(showTextArea);
 		waitJsp.setWheelScrollingEnabled(true);
 		waitJsb = waitJsp.getVerticalScrollBar();  
 		
 		JPanel left = new JPanel();
 		left.setLayout(new BorderLayout());
-		left.add(inputid, "North");
+		left.add(inputId, "North");
 		left.add(waitJsp, "Center");
 		left.add(inputText, "South");
 		left.setBorder(loweredetched);
 		
 		//접속자 스크롤바 추가.
-		userListJsp = new JScrollPane(IDlist);
+		userListJsp = new JScrollPane(idlist);
 		userListJsp.setWheelScrollingEnabled(true);
 		userListJsb = userListJsp.createVerticalScrollBar();
 		
@@ -107,7 +119,7 @@ class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		right_up.add(userListJsp);
 		
 		//오른쪽 버튼 클릭했을때
-		IDlist.addMouseListener(
+		idlist.addMouseListener(
 				new MouseAdapter(){
 					public void mouseClicked(MouseEvent e){
 						if(e.getButton() == 3){
@@ -172,7 +184,7 @@ class WaitRoom extends JFrame implements KeyListener, ActionListener{
 
 	//버튼에 대한 이벤트
 	public void actionPerformed(ActionEvent ac) {
-		String receiveid = IDlist.getSelectedItem();
+		String receiveid = idlist.getSelectedItem();
 		if(ac.getActionCommand().equals("방 만들기")){
 			dispose();	dispose();
 
@@ -244,7 +256,7 @@ class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		 * ==================================================================*/
 		else if(ac.getSource()==mantoman ){
 			if(receiveid == null){		//받는 사람이 없을때
-				SelectChatUser seluser = new SelectChatUser(id);
+				SelectChatUser seluser = new SelectChatUser(id, this);
 			}else{
 				try {
 					MultiClient.sendMsg(MsgInfo.ADDCHAT, receiveid+"/"+id);		//1:1 채팅 유저 둘 추가

@@ -1,4 +1,4 @@
-package com.jyeory.chat.client;
+package com.jyeory.chat.client.component;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -12,25 +12,33 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.jyeory.chat.common.FileReceiveClient;
-import com.jyeory.chat.common.SaveFile;
+import com.jyeory.chat.client.MultiClient;
+import com.jyeory.chat.common.client.FileReceiveClient;
+import com.jyeory.chat.common.component.SaveFile;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AskForFile extends Frame implements ActionListener {
 	
 	JLabel subject;
 	JButton accept;
 	JButton reject;
-	String target;
-	String senduser;
-	FileReceiveClient client;
-	int port;
+	private String target;
+	private String senduser;
+	private int port;
 	
-	AskForFile(String target, String shooter, int portnum){
+	FileReceiveClient client;
+	
+	public AskForFile(String target, String shooter, int portnum){
 		super(shooter+"의 파일 수신 요청.");
 		this.target = target;
 		this.senduser = shooter;
 		this.port = portnum;
 	}
+	
 	public void showFrame(){
 		subject = new JLabel(senduser+"님의 파일을 받으시겠습니까?");
 		accept = new JButton("승인");
