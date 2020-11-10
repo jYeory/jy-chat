@@ -29,14 +29,9 @@ public class InputInfo extends JFrame implements ActionListener{
 	private JTextField ipTxtFld;
 	private JTextField portTxtFld;
 	private JButton okBtn;
-	private JComboBox genderCmbBox;
 	
 	public InputInfo(){
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		genderCmbBox = new JComboBox();
-		genderCmbBox.addItem("남자");
-		genderCmbBox.addItem("여자");
 
 		JLabel title = new JLabel("기본 정보를 입력하세요.");
 		JLabel caution = new JLabel("한글 6자, 영어 12자 이내!!");
@@ -50,8 +45,6 @@ public class InputInfo extends JFrame implements ActionListener{
 		
 		JPanel centerPanel1 = new JPanel();
 		centerPanel1.setLayout(new GridBagLayout());
-		addItem(centerPanel1, new JLabel("성별 :"), 0, 0, 1, 1, GridBagConstraints.EAST);
-		addItem(centerPanel1, genderCmbBox, 1, 0, 2, 1, GridBagConstraints.WEST);
 		
 	    addItem(centerPanel1, new JLabel("닉넴 :"), 0, 1, 1, 1, GridBagConstraints.EAST);
 	    addItem(centerPanel1, idTxtFld, 1, 1, 10, 1, GridBagConstraints.WEST);
@@ -132,13 +125,10 @@ public class InputInfo extends JFrame implements ActionListener{
 			}
 		}
 		
-		String genderStr;
 		if(e.getActionCommand().equals("OK")){
-			genderStr = (this.genderCmbBox.getSelectedIndex() == 0) ? "[남]" : "[여]";
-			
 			try {
 				this.dispose();			//이 창은 없어져야 한다.
-				new MultiClient(genderStr+idTxtFld.getText());
+				new MultiClient(idTxtFld.getText());
 			} catch (IOException e1) {}
 		}
 	}

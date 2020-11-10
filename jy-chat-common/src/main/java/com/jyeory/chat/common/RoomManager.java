@@ -7,7 +7,7 @@ import java.util.Vector;
 
 public class RoomManager {
 	//전체 접속자!!
-	public static Vector<ClientConnection> allUserList = new Vector<ClientConnection>();
+	public Vector<ClientConnection> allUserList = new Vector<ClientConnection>();
 	
 	/*
 	 *  접속자!! 이부분은 쪽지나 1:1 대화를 위해 필요로 한다.
@@ -29,7 +29,7 @@ public class RoomManager {
 	/*-----------------------------------------------------
 	 * 			방을 만들고 Map에 집어 넣기.
 	 *-----------------------------------------------------*/
-	public static void makeRoom(String roomName){
+	public void makeRoom(String roomName){
 		Room newRoom = new Room(roomName);
 		roomMap.put(roomName, newRoom);
 	}

@@ -143,12 +143,14 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		JPanel right = new JPanel();
 		right.setBorder(loweredetched);
 		right.setLayout(new GridLayout(2,1));
-		right.add(right_up);	right.add(right_down);
-		
+		right.add(right_up);	
+		right.add(right_down);
 		
 		JPanel south = new JPanel();
 		south.setLayout(new FlowLayout());
-		south.add(make);	south.add(enter);	south.add(exit);
+		south.add(make);	
+		south.add(enter);	
+		south.add(exit);
 		enter.addActionListener(this);
 		make.addActionListener(this);
 		exit.addActionListener(this);
@@ -181,33 +183,44 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 			SendMessage.chattingStart(consoleData);			//채팅 시작
 		}
 	}
+	
+	public void closeWindow() {
+		this.dispose();
+	}
 
 	//버튼에 대한 이벤트
 	public void actionPerformed(ActionEvent ac) {
 		String receiveid = idlist.getSelectedItem();
 		if(ac.getActionCommand().equals("방 만들기")){
-			dispose();	dispose();
-
 			final JFrame makeroom = new JFrame();
 			final JTextField roomname;	//방이름
+			
+//			dispose();
+//			dispose();
+			
 			Button ok;		//확인
 			JLabel title = new JLabel("방이름을 입력하세요");
 			roomname = new JTextField(10);
 			ok = new Button("OK");
 			ok.addActionListener(this);
+			
+			ok = new Button("OK");
+			ok.addActionListener(this);
+			
 			makeroom.add(title, "North");
 			Panel southPanel = new Panel();
 			southPanel.add(roomname);	southPanel.add(ok);
 			makeroom.add(southPanel, "Center");
-			makeroom.setBounds(500, 300, 200, 80);
+			makeroom.setBounds(500, 300, 200, 120);
 			makeroom.setVisible(true);
-
+			
 			/*==================================================================
 			 *				 방 이름 입력하고 Ok누를때
 			 * ==================================================================*/
 			ok.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					if(e.getActionCommand().equals("OK")){
+						closeWindow();
 						makeroom.dispose();	//이 창은 없어져야 한다.
 						Room room = RoomManager.roomMap.get("Main");
 						System.out.println(room);
@@ -216,8 +229,8 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 						} catch (IOException e1) { e1.printStackTrace(); }
 					}
 				}
-
 			});
+			
 			/*==================================================================
 			 *				 방 클릭하고 들어가기누를때
 			 * ==================================================================*/
