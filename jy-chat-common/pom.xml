@@ -7,11 +7,11 @@
 	<parent>
 		<groupId>com.jyeory.www</groupId>
 		<artifactId>jy-chat</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.1.1-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>jy-chat-common</artifactId>
-	<version>0.0.1</version>
+	<version>0.1.1</version>
 	<name>jy-chat-common</name>
 	<url>http://maven.apache.org</url>
 	
