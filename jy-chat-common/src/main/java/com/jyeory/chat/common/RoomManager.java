@@ -93,7 +93,7 @@ public class RoomManager {
 	 * 	user에는 1:1대화만 하는 두명이 있기에 그 두명에게만
 	 *  정보를 전송하면 된다.
 	 *-----------------------------------------------------*/
-	public static void mantomanChat(String receiveuser, String senduser, String msg){
+	public static void oneOnOneChat(String receiveuser, String senduser, String msg){
 		for(int i=0; i<user.size(); i++){
 			user.get(i).sendMsg(MsgInfo.MANTOMAN+"/"+receiveuser+"/"+senduser+"/"+msg);
 //			System.out.println(user.get(i)+"에게 정보를 보냈다.");	//확인용

@@ -39,13 +39,13 @@ public class ClientConnection implements Runnable{
  * ==================================================================*/
 	private void waitRoom(String username){
 		RoomManager.addallUserList(name, this);								//전체 유저에 자기 자신 추가!! (쪽지 때문에!);
-		Room waitroom = RoomManager.getRoom("Main");							//Main의 주소를 가져옴
-		waitroom.addUser(this);													//Room에 자기 자신을 추가
+		Room waitingRoom = RoomManager.getRoom("Main");							//Main의 주소를 가져옴
+		waitingRoom.addUser(this);													//Room에 자기 자신을 추가
 //		System.out.println("대기실에서의 userlist : " + waitroom.userList.size());
-		waitroom.addWaitUser(username, this);									//Room에 대기 유저에 자기 자신을 추가
-		waitroom.broadCast(MsgInfo.MAIN+"/"+name + " 님께서 " +waitroom.getRoomName()+ "에 입장하셨습니다.");
-		waitroom.WaitUserList();												//대기실에 대기 유저 정보 전송
-		waitroom.broadCast(MsgInfo.ROOMLIST+"/"+RoomManager.getRoomList());		//대기실에 대화방 목록 전송
+		waitingRoom.addWaitUser(username, this);									//Room에 대기 유저에 자기 자신을 추가
+		waitingRoom.broadCast(MsgInfo.MAIN+"/"+name + " 님께서 " +waitingRoom.getRoomName()+ "에 입장하셨습니다.");
+		waitingRoom.WaitUserList();												//대기실에 대기 유저 정보 전송
+		waitingRoom.broadCast(MsgInfo.ROOMLIST+"/"+RoomManager.getRoomList());		//대기실에 대화방 목록 전송
 	}
 /*==================================================================
  *			MAKEROOM에서는 makeRoom으로 오게 된다.
@@ -132,7 +132,7 @@ public class ClientConnection implements Runnable{
 		System.out.println("받는 사람 : " + receiveuser);		//확인용
 		System.out.println("보내는 사람 : " + senduser);		//확인용
 		System.out.println("내용 : " + text);					//확인용
-		RoomManager.mantomanChat(receiveuser, senduser, text);
+		RoomManager.oneOnOneChat(receiveuser, senduser, text);
 	}
 	/*==================================================================
 	 *			MAKECHAT에서는 makeChat으로 오게 된다.
