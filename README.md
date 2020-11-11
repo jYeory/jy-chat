@@ -14,5 +14,5 @@
 클라 : mvn clean package -pl jy-chat-client -am  
 
 # 실행 (순서대로)
-서버 : java -jar -Dfile.encoding=MS949 {module_dir}/target/jy-chat-server-0.0.1-jar-with-dependencies.jar  
-클라 : java -jar -Dfile.encoding=MS949 {module_dir}/target/jy-chat-client-0.0.1-jar-with-dependencies.jar   
+서버 : java -jar -Dfile.encoding=UTF-8 {module_dir}/target/jy-chat-server-0.0.1-jar-with-dependencies.jar  
+클라 : java -jar -Dfile.encoding=UTF-8 {module_dir}/target/jy-chat-client-0.0.1-jar-with-dependencies.jar   
