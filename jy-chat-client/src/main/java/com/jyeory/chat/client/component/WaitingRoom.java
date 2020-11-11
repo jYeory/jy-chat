@@ -3,6 +3,7 @@ package com.jyeory.chat.client.component;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.Panel;
@@ -15,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -45,7 +47,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class WaitRoom extends JFrame implements KeyListener, ActionListener{
+public class WaitingRoom extends JFrame implements KeyListener, ActionListener{
 	private JTextArea showTextArea = new JTextArea(10, 20);
 	private JLabel inputId;
 	private String id;
@@ -58,10 +60,10 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 	JButton make = new JButton("방 만들기");
 	JButton enter = new JButton("들어가기");
 	JButton exit = new JButton("나가기");
-	JPopupMenu waitpopup;  
-	JMenuItem sendmemo, mantoman, transferFile;
+	JPopupMenu waitPopup;  
+	JMenuItem sendMemo, oneOnOne, transferFile;
 	String roomtitle;
-	JScrollPane waitJsp;
+	JScrollPane wrJsp;
 	JScrollPane userListJsp;
 	JScrollPane roomListJsp;
 	JScrollBar waitJsb;
@@ -70,7 +72,7 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 
 	MyMenuBar mb = new MyMenuBar(this);
 	
-	public WaitRoom(String title){
+	public WaitingRoom(String title){
 		super(title);
 		roomtitle = title;
 	}
@@ -81,10 +83,17 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		/*
 		 * MyMenuBar 클래스의 메소드를 이용해 메뉴 추가.
 		 */
-		mb.addMenus(new String[]{"파일", "접속자", "메신저"});
-		mb.addMenuItems(0, new String[]{"대화내용 저장",null, "닫기"});
-		mb.addMenuItems(1, new String[]{"전체 접속자"});
-		mb.addMenuItems(2, new String[]{"쪽지 보내기", "대화하기", "파일 보내기"});
+		Font f1 = new Font("Gulim", Font.PLAIN, 12);
+		mb.setFont(f1);
+		
+		try {
+			mb.addMenus(new String[]{"파일1", "접속자", "메신저"});
+			mb.addMenuItems(0, new String[]{"대화내용 저장", null, "닫기"});
+			mb.addMenuItems(1, new String[]{"전체 접속자"});
+			mb.addMenuItems(2, new String[]{"쪽지 보내기", "대화하기", "파일 보내기"});
+		} catch (UnsupportedEncodingException ue) {
+			ue.printStackTrace();
+		}
 		mb.addActionListener(ac);
 
 		this.id = name;
@@ -92,20 +101,25 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		inputText.addKeyListener(this);
 
-		waitpopup=new JPopupMenu();
-		sendmemo=new JMenuItem("쪽지보내기");  		sendmemo.addActionListener(this);
-		mantoman=new JMenuItem("1:1대화");   		mantoman.addActionListener(this);
-		transferFile=new JMenuItem("파일전송");  	transferFile.addActionListener(this);
+		waitPopup=new JPopupMenu();
+		sendMemo=new JMenuItem("쪽지보내기");
+		sendMemo.addActionListener(this);
+		
+		oneOnOne=new JMenuItem("1:1대화");
+		oneOnOne.addActionListener(this);
+		
+		transferFile=new JMenuItem("파일전송");
+		transferFile.addActionListener(this);
 
 		//대기실 채팅창에 스크롤바 추가.
-		waitJsp = new JScrollPane(showTextArea);
-		waitJsp.setWheelScrollingEnabled(true);
-		waitJsb = waitJsp.getVerticalScrollBar();  
+		wrJsp = new JScrollPane(showTextArea);
+		wrJsp.setWheelScrollingEnabled(true);
+		waitJsb = wrJsp.getVerticalScrollBar();  
 		
 		JPanel left = new JPanel();
 		left.setLayout(new BorderLayout());
 		left.add(inputId, "North");
-		left.add(waitJsp, "Center");
+		left.add(wrJsp, "Center");
 		left.add(inputText, "South");
 		left.setBorder(loweredetched);
 		
@@ -120,16 +134,17 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		
 		//오른쪽 버튼 클릭했을때
 		idlist.addMouseListener(
-				new MouseAdapter(){
-					public void mouseClicked(MouseEvent e){
-						if(e.getButton() == 3){
-							waitpopup.add(sendmemo);
-							waitpopup.add(mantoman);
-							waitpopup.add(transferFile);
-							waitpopup.show(e.getComponent(), e.getX(), e.getY());
-						}
+			new MouseAdapter(){
+				public void mouseClicked(MouseEvent e){
+					if(e.getButton() == 3){
+						waitPopup.add(sendMemo);
+						waitPopup.add(oneOnOne);
+						waitPopup.add(transferFile);
+						waitPopup.show(e.getComponent(), e.getX(), e.getY());
 					}
-				});
+				}
+			}
+		);
 
 		//방 목록 스크롤바 추가.
 		roomListJsp = new JScrollPane(roomList);
@@ -195,9 +210,6 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 			final JFrame makeroom = new JFrame();
 			final JTextField roomname;	//방이름
 			
-//			dispose();
-//			dispose();
-			
 			Button ok;		//확인
 			JLabel title = new JLabel("방이름을 입력하세요");
 			roomname = new JTextField(10);
@@ -256,7 +268,7 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		/*==================================================================
 		 *				 (오른쪽 버튼) 쪽지 보내기 눌렀을때
 		 * ==================================================================*/
-		else if(ac.getSource()==sendmemo){
+		else if(ac.getSource()==sendMemo){
 			SendMemo memo = new SendMemo();
 			if(receiveid == null){		//받는 사람이 없을때
 				memo.showFrame(null, id);
@@ -267,7 +279,7 @@ public class WaitRoom extends JFrame implements KeyListener, ActionListener{
 		/*==================================================================
 		 *				 (오른쪽 버튼) 1:1대화 눌렀을때
 		 * ==================================================================*/
-		else if(ac.getSource()==mantoman ){
+		else if(ac.getSource()==oneOnOne ){
 			if(receiveid == null){		//받는 사람이 없을때
 				SelectChatUser seluser = new SelectChatUser(id, this);
 			}else{

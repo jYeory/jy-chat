@@ -16,7 +16,7 @@ public class MultiServer {
 	public void clientConnectionStart(){
 		ServerSocket serverSocket=null;
 		try{
-			System.out.println("서버 대기상태");
+			System.out.println("서버 대기상태 [port : 3334]");
 			serverSocket = new ServerSocket(3334);
 			
 			while(true){

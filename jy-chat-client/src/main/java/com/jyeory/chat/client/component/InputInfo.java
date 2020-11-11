@@ -39,6 +39,7 @@ public class InputInfo extends JFrame implements ActionListener{
 		idTxtFld = new JTextField(10);
 		ipTxtFld = new JTextField(15);
 		portTxtFld = new JTextField(5);
+		portTxtFld.setText("3334");	// 기본 포트
 		
 		okBtn = new JButton("OK");
 		okBtn.addActionListener(this);
@@ -128,7 +129,8 @@ public class InputInfo extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals("OK")){
 			try {
 				this.dispose();			//이 창은 없어져야 한다.
-				new MultiClient(idTxtFld.getText());
+//				new MultiClient(idTxtFld.getText());
+				new MultiClient(idTxtFld.getText(), ipTxtFld.getText(), portTxtFld.getText());
 			} catch (IOException e1) {}
 		}
 	}
