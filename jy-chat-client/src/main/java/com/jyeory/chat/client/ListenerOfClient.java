@@ -12,7 +12,7 @@ import com.jyeory.chat.client.component.OneOnOneChatSend;
 import com.jyeory.chat.client.component.ReceiveMemo;
 import com.jyeory.chat.client.component.SelectID;
 import com.jyeory.chat.client.component.ShowAll;
-import com.jyeory.chat.client.component.WaitRoom;
+import com.jyeory.chat.client.component.WaitingRoom;
 import com.jyeory.chat.common.MsgInfo;
 
 class ListenerOfClient extends Thread{
@@ -24,10 +24,10 @@ class ListenerOfClient extends Thread{
 	private BufferedReader networkReader;
 	private Socket socket;
 	private String name;
-	private WaitRoom waitroom;
+	private WaitingRoom waitroom;
 	private MultiClient mClient;
 	
-	ListenerOfClient(BufferedWriter networkWriter, BufferedReader networkReader, Socket socket, WaitRoom waitroom, MultiClient mClient){
+	ListenerOfClient(BufferedWriter networkWriter, BufferedReader networkReader, Socket socket, WaitingRoom waitroom, MultiClient mClient){
 		this.networkWriter = networkWriter;
 		this.networkReader = networkReader;
 		this.socket = socket;
@@ -38,8 +38,9 @@ class ListenerOfClient extends Thread{
 		try {
 			String line;
 			while( (line = networkReader.readLine()) != null ){
-				System.out.println("서버에서 온 메세지1 : " + line);
-//				line = new String(line.getBytes(), "UTF-8");
+				System.out.println("서버에서 온 메세지0 : " + line);
+//				System.out.println("서버에서 온 메세지1 : " + new String(line.getBytes(), "UTF-8"));
+//				line = new String(line.getBytes(), "MS949");
 //				System.out.println("서버에서 온 메세지2 : " + line);
 				parsingData = line.split("/");
 	/*==================================================================

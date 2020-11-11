@@ -8,7 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 import com.jyeory.chat.client.component.InputInfo;
-import com.jyeory.chat.client.component.WaitRoom;
+import com.jyeory.chat.client.component.WaitingRoom;
 import com.jyeory.chat.common.MsgInfo;
 
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class MultiClient{
 	public static String ip = "localhost";					// IP
 	public static int port	= 3334;							// PORT번호
 	
-	private WaitRoom waitroom = new WaitRoom("대기실");
+	private WaitingRoom waitroom = new WaitingRoom("대기실");
 	private String name;
 	
 	static Socket socket;							
@@ -34,6 +34,12 @@ public class MultiClient{
 		setSocket(ip, port, name);
 	}
 	
+	public MultiClient(String name, String ip, String port) throws NumberFormatException, IOException {
+		this.name = name;				//사용자 ID
+		waitroom.showFrame(name);
+		setSocket(ip, Integer.parseInt(port), name);
+	}
+
 	public void setSocket(String ip, int port, String name) throws IOException{
 		try{
 			socket = new Socket(ip,port);

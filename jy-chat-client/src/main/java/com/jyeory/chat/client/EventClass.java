@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
 import com.jyeory.chat.client.component.SelectChatUser;
 import com.jyeory.chat.client.component.SendMemo;
 import com.jyeory.chat.client.component.TransferFile;
-import com.jyeory.chat.client.component.WaitRoom;
+import com.jyeory.chat.client.component.WaitingRoom;
 import com.jyeory.chat.common.MsgInfo;
 /*
  * 	대기실에서의 메뉴 이벤트 처리 클래스.
@@ -25,9 +25,9 @@ public class EventClass implements ActionListener {
 	
 	private String roomTitle;
 	private Frame[] frame;
-	private WaitRoom wRoom;
+	private WaitingRoom wRoom;
 	
-	public EventClass(String title, Frame[] frames, WaitRoom wRoom) {
+	public EventClass(String title, Frame[] frames, WaitingRoom wRoom) {
 		this.roomTitle = title;
 		this.frame = frames;
 		this.wRoom = wRoom;

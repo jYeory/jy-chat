@@ -37,9 +37,9 @@ public class SelectChatUser extends Frame implements ActionListener{
 	JButton exit;
 	String receiveid;
 	private String id;
-	private WaitRoom wRoom;
+	private WaitingRoom wRoom;
 	
-	public SelectChatUser(String id, WaitRoom wRoom){
+	public SelectChatUser(String id, WaitingRoom wRoom){
 		this.id = id;
 		this.wRoom = wRoom;
 		init();

@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -51,8 +52,8 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 	JButton exit = new JButton("나가기");
 	
 	String id;
-	JPopupMenu chatpopup;  
-	JMenuItem sendmemo, mantoman, transferFile, kick, change;
+	JPopupMenu chatPopup;  
+	JMenuItem sendMemo, oneOnOne, transferFile, kick, change;
 	JScrollPane chatJsp;
 	JScrollBar chatJsb;
 	JScrollPane userJsp;
@@ -69,11 +70,15 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 	public void showFrame(String name){
 		ActionListener ac = new ChatEventClass(title, this.getFrames());
 
-		//메뉴바 추가(MyMenuBar클래스 이용)
-		mb.addMenus(new String[]{"파일", "접속자", "메신저"});
-		mb.addMenuItems(0, new String[]{"대화내용 저장"});
-		mb.addMenuItems(1, new String[]{"전체 접속자"});
-		mb.addMenuItems(2, new String[]{"쪽지 보내기", "대화하기", "파일 보내기"});
+		try {
+			//메뉴바 추가(MyMenuBar클래스 이용)
+			mb.addMenus(new String[]{"파일", "접속자", "메신저"});
+			mb.addMenuItems(0, new String[]{"대화내용 저장"});
+			mb.addMenuItems(1, new String[]{"전체 접속자"});
+			mb.addMenuItems(2, new String[]{"쪽지 보내기", "대화하기", "파일 보내기"});
+		} catch (UnsupportedEncodingException ue) {
+			ue.printStackTrace();
+		}
 		mb.addActionListener(ac);
 		
 		id = name;
@@ -82,9 +87,9 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 		inputText.addKeyListener(this);
 		
 		//	오른쪽 버튼을 클릭 했을때.
-		chatpopup=new JPopupMenu();
-		sendmemo=new JMenuItem("쪽지보내기");  		sendmemo.addActionListener(this);
-		mantoman=new JMenuItem("1:1대화");   		mantoman.addActionListener(this);
+		chatPopup=new JPopupMenu();
+		sendMemo=new JMenuItem("쪽지보내기");  		sendMemo.addActionListener(this);
+		oneOnOne=new JMenuItem("1:1대화");   		oneOnOne.addActionListener(this);
 		transferFile=new JMenuItem("파일전송");  	transferFile.addActionListener(this);
 		kick = new JMenuItem("강퇴");				kick.addActionListener(this);
 		
@@ -116,16 +121,16 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 				if(e.getButton() == 3){
 //					System.out.println("방장 코드 : " + chiefcode);		
 					if( chiefCode == 1 ){		//방장이면 전부다 출력.
-						chatpopup.add(sendmemo);
-						chatpopup.add(mantoman);
-						chatpopup.add(transferFile);
-						chatpopup.add(kick);
-						chatpopup.show(e.getComponent(), e.getX(), e.getY());
+						chatPopup.add(sendMemo);
+						chatPopup.add(oneOnOne);
+						chatPopup.add(transferFile);
+						chatPopup.add(kick);
+						chatPopup.show(e.getComponent(), e.getX(), e.getY());
 					}else{						//아니면 기본적인것만.
-						chatpopup.add(sendmemo);
-						chatpopup.add(mantoman);
-						chatpopup.add(transferFile);
-						chatpopup.show(e.getComponent(), e.getX(), e.getY());
+						chatPopup.add(sendMemo);
+						chatPopup.add(oneOnOne);
+						chatPopup.add(transferFile);
+						chatPopup.show(e.getComponent(), e.getX(), e.getY());
 					}
 				}
 			}
@@ -178,7 +183,7 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 /*==================================================================
  *				 (오른쪽 버튼) 쪽지 보내기 눌렀을때
  * ==================================================================*/
-		else if(e.getSource()==sendmemo){
+		else if(e.getSource()==sendMemo){
 			if(receiveid == null){		//받는 사람이 없을때
 				JOptionPane.showMessageDialog(null, "대상을 선택하세요.");
 			}else if(receiveid.startsWith("[방장]")){		//[방장]이란 글자 떼어내고!
@@ -191,7 +196,7 @@ public class ChatRoom extends JFrame implements KeyListener, ActionListener{
 /*==================================================================
  *				 (오른쪽 버튼) 1:1대화 눌렀을때
  * ==================================================================*/
-		else if(e.getSource()==mantoman){
+		else if(e.getSource()==oneOnOne){
 			if(receiveid == null){		//받는 사람이 없을때
 				JOptionPane.showMessageDialog(null, "대상을 선택하세요.");
 			}else if(receiveid.startsWith("[방장]")){

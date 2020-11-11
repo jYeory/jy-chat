@@ -6,7 +6,7 @@ import com.jyeory.chat.common.MsgInfo;
 
 public class SendMessage {
 	public static void chattingStart(String consoleData){
-		System.out.println(consoleData);
+		System.out.println("SendMessage.chattingStart() : "+consoleData);
 		try{
 			if("".equals(consoleData)){
 				consoleData = " ";
