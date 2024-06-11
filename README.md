@@ -5,7 +5,7 @@
 
 # 모듈
 공통 : jy-chat-common    
-서버 : jy-chat-server
+서버 : jy-chat-server    
 클라이언트 : jy-chat-client
 
 # build (순서대로)
